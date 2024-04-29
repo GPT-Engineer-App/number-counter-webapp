@@ -5,9 +5,18 @@ import { useState } from "react";
 
 const Index = () => {
   const [count, setCount] = useState(0);
+  const [history, setHistory] = useState([]);
 
-  const increment = () => setCount(count + 1);
-  const decrement = () => setCount(count - 1);
+  const increment = () => {
+    const newCount = count + 1;
+    setCount(newCount);
+    setHistory([...history, `Increased to ${newCount}`]);
+  };
+  const decrement = () => {
+    const newCount = count - 1;
+    setCount(newCount);
+    setHistory([...history, `Decreased to ${newCount}`]);
+  };
 
   return (
     <VStack spacing={4} align="center" justify="center" height="100vh">
@@ -22,6 +31,16 @@ const Index = () => {
         <Button rightIcon={<FaPlus />} colorScheme="teal" onClick={increment} m={2}>
           Increase
         </Button>
+      </Box>
+      <Box w="100%" maxW="400px" overflowY="auto" maxHeight="200px">
+        <Text fontSize="md" fontWeight="bold" mb={2}>
+          History:
+        </Text>
+        {history.map((entry, index) => (
+          <Text key={index} fontSize="sm">
+            {entry}
+          </Text>
+        ))}
       </Box>
     </VStack>
   );
